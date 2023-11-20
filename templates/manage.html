@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block link %}
+<link type="text/css" href="{{url_for('static', filename='css/manage/style.css')}}" rel="stylesheet" />
+<script src="{{url_for('static', filename='js/manage/main.js')}}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+{% block content %}
+{{ super() }}
+  <h1>Screen Capture Stream</h1>
+  <button onclick="VirtualCb()">Виртуальная клавиатура</button>
+  <img src="{{ url_for('video_feed') }}" onclick="handleClick(event)" id="video-stream">
+
+{% endblock %}

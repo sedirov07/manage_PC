@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block link %}
+<link type="text/css" href="{{url_for('static', filename='css/index/style.css')}}" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{url_for('static', filename='js/index/script.js')}}"></script>
+{% endblock %}
+{% block content %}
+{{ super() }}
+<div class="container">
+    <div class="apps-container">
+        <h2 class="apps">Состояние приложений</h2>
+        <ul class="apps-list">
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon-steam.svg')}}" alt="Steam Icon" />
+                Steam
+                <button data-name="steam" class="status-button {% if is_running['steam'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['steam'] %}Off{% else %}On{% endif %}
+            </li>
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon-discord.svg')}} " alt="Discord Icon" />
+                Discord
+                <button data-name="discord" class="status-button {% if is_running['discord'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['discord'] %}Off{% else %}On{% endif %}
+            </li>
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon-yandex.svg')}} " alt="YandexBrowser Icon" />
+                YBrowser
+                <button data-name="yandex" class="status-button {% if is_running['browser'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['browser'] %}Off{% else %}On{% endif %}
+            </li>
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon-sims4.ico')}} " alt="Sims 4 Icon" />
+                The Sims 4
+                <button data-name="the sims 4" class="status-button {% if is_running['launcher'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['launcher'] %}Off{% else %}On{% endif %}
+            </li>
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon-csgo.svg')}} " alt="CS:GO Icon" />
+                CS:GO
+                <button data-name="cs:go" class="status-button {% if is_running['csgo'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['csgo'] %}Off{% else %}On{% endif %}
+            </li>
+            <li class="app-item">
+                <img src="{{url_for('static', filename='images/index/icon_taskmanager.svg')}} " alt="Task Manager" />
+                Диспетчер
+                <button data-name="taskmgr" class="status-button {% if is_running['taskmgr'] %}off-button{% else %}on-button{% endif %}" onclick="toggleStatus(this)" />
+                {% if is_running['taskmgr'] %}Off{% else %}On{% endif %}
+            </li>
+        </ul>
+    </div>
+    <div class="todo-list">
+      <h2>To—Do—List</h2>
+      <input type="text" id="taskInput" placeholder="Введите задачу">
+      <!--<button class="add-button" onclick="addTask()">Добавить</button>-->
+      <button class='glowing-btn add-button' onclick="addTask()"><span class='glowing-txt'>Доба<span class='faulty-letter'>вить</span></span></button>
+      <ul id="taskList"></ul>
+    </div>
+    <div class="chat-container">
+        <div id="message-container"></div>
+        <input type="text" id="message-input" placeholder="Введите сообщение...">
+        <!--<button id="send-button" onclick="sendMessage()">Отправить</button>-->
+        <button class='glowing-btn' id="send-button" onclick="sendMessage()"><span class='glowing-txt'>Отпра<span class='faulty-letter'>вить</span></span></button>
+    </div>
+</div>
+
+<div class="volume-container">
+    <span class='glowing-txt'>Уровень <span class='faulty-letter'>громкости</span></span>
+    <img src="{{url_for('static', filename='images/index/icon-speaker.png')}} " alt="Speaker Icon" />
+    <input type="range" min="0" max="100" value="{{volume[:-1]}}" class="slider" id="volumeSlider">
+    <span class="volume-text glowing-txt" id="volumeText">{{volume}}</span>
+</div>
+
+<div class="system">
+    <button class='glowing-btn sys-info' onclick="toggleSystemInfo()"><span class='glowing-txt'>Системная<span class='faulty-letter'> информация</span></span></button>
+    <div class="system-info">
+        <ul class="system-info-list" id="system-info-list" style="display: none;">
+            {% for key in info %}
+            <li class="system-info-text">{{key.title()}} : {{info[key]}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="container_slider_css">
+  {% for image in images %}
+    <div class="image_container">
+      <img class='photo_slider_css' src="{{ url_for('static', filename='slider/'+image) }}" alt="{{ image }}" />
+    </div>
+  {% endfor %}
+</div>
+
+
+<div class="system">
+    <button class='glowing-btn' onclick="shutdownPC()"><span class='glowing-txt'>Выключить<span class='faulty-letter'> ПК</span></span></button>
+    <button class='glowing-btn' onclick="restartPC()"><span class='glowing-txt'>Перезагрузить<span class='faulty-letter'> ПК</span></span></button>
+</div>
+{% endblock %}
